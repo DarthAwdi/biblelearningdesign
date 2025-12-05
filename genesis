@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Module 1: Creation Week! 🌍✨</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Quicksand:wght@400;600&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Quicksand', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            min-height: 100vh;
+            padding: 20px;
+            color: #2d3748;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 30px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        }
+
+        h1 {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 3em;
+            text-align: center;
+            color: #667eea;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subtitle {
+            text-align: center;
+            font-size: 1.2em;
+            color: #718096;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            width: 100%;
+            height: 30px;
+            background: #e2e8f0;
+            border-radius: 15px;
+            margin-bottom: 30px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #48bb78, #38b2ac);
+            width: 0%;
+            transition: width 0.5s ease;
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+            padding-right: 10px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .section {
+            margin-bottom: 40px;
+            padding: 30px;
+            background: #f7fafc;
+            border-radius: 20px;
+            border: 3px solid #e2e8f0;
+        }
+
+        .section-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2em;
+            color: #667eea;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .hook-text {
+            font-size: 1.3em;
+            line-height: 1.6;
+            color: #2d3748;
+            margin-bottom: 15px;
+        }
+
+        .day-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .day-card {
+            background: white;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 3px solid #e2e8f0;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .day-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .day-card.unlocked {
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            border-color: #667eea;
+            color: white;
+        }
+
+        .day-number {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .day-emoji {
+            font-size: 4em;
+            margin: 15px 0;
+            display: block;
+        }
+
+        .day-title {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3em;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        .day-description {
+            font-size: 1.1em;
+            line-height: 1.4;
+            opacity: 0;
+            max-height: 0;
+            overflow: hidden;
+            transition: all 0.5s ease;
+        }
+
+        .day-card.unlocked .day-description {
+            opacity: 1;
+            max-height: 500px;
+            margin-top: 10px;
+        }
+
+        .checkmark {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            font-size: 2em;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .day-card.unlocked .checkmark {
+            opacity: 1;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 25px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            border: 3px solid #e2e8f0;
+        }
+
+        .question-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.5em;
+            color: #2d3748;
+            margin-bottom: 20px;
+        }
+
+        .quiz-options {
+            display: grid;
+            gap: 15px;
+        }
+
+        .quiz-option {
+            padding: 15px 20px;
+            background: #f7fafc;
+            border: 3px solid #cbd5e0;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 1.2em;
+            font-weight: 600;
+        }
+
+        .quiz-option:hover {
+            background: #edf2f7;
+            transform: scale(1.02);
+        }
+
+        .quiz-option.correct {
+            background: #c6f6d5;
+            border-color: #48bb78;
+            animation: celebrate 0.5s ease;
+        }
+
+        .quiz-option.incorrect {
+            background: #fed7d7;
+            border-color: #f56565;
+            animation: shake 0.5s ease;
+        }
+
+        @keyframes celebrate {
+            0%, 100% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-10px); }
+            75% { transform: translateX(10px); }
+        }
+
+        .feedback {
+            margin-top: 15px;
+            padding: 15px;
+            border-radius: 10px;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            display: none;
+        }
+
+        .feedback.show {
+            display: block;
+            animation: fadeIn 0.5s ease;
+        }
+
+        .feedback.success {
+            background: #c6f6d5;
+            color: #22543d;
+        }
+
+        .feedback.error {
+            background: #fed7d7;
+            color: #742a2a;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .badge-container {
+            text-align: center;
+            padding: 40px;
+            background: linear-gradient(135deg, #ffd89b, #19547b);
+            border-radius: 20px;
+            margin-top: 30px;
+            display: none;
+        }
+
+        .badge-container.show {
+            display: block;
+            animation: zoomIn 0.6s ease;
+        }
+
+        @keyframes zoomIn {
+            from { transform: scale(0.5); opacity: 0; }
+            to { transform: scale(1); opacity: 1; }
+        }
+
+        .badge {
+            font-size: 8em;
+            margin-bottom: 20px;
+            animation: rotate 2s ease-in-out infinite;
+        }
+
+        @keyframes rotate {
+            0%, 100% { transform: rotate(-5deg); }
+            50% { transform: rotate(5deg); }
+        }
+
+        .badge-text {
+            font-family: 'Fredoka', sans-serif;
+            font-size: 2.5em;
+            color: white;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .badge-subtext {
+            font-size: 1.3em;
+            color: white;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea, #764ba2);
+            color: white;
+            border: none;
+            border-radius: 50px;
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.3em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 20px;
+            text-decoration: none;
+        }
+
+        .btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+
+        .real-world {
+            background: linear-gradient(135deg, #fff5f7, #ffe4e9);
+            border: 3px solid #fc8da8;
+        }
+
+        .real-world-examples {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .example-card {
+            background: white;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            border: 2px solid #fc8da8;
+        }
+
+        .example-emoji {
+            font-size: 3em;
+            display: block;
+            margin-bottom: 10px;
+        }
+
+        .example-text {
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #2d3748;
+        }
+
+        .instruction {
+            background: #fef5e7;
+            border: 3px solid #f39c12;
+            padding: 20px;
+            border-radius: 15px;
+            margin-bottom: 20px;
+        }
+
+        .instruction-text {
+            font-size: 1.2em;
+            font-weight: 600;
+            color: #2d3748;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 20px;
+            }
+
+            h1 {
+                font-size: 2em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .day-container {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .confetti {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            background: #f39c12;
+            position: absolute;
+            animation: confetti-fall 3s linear forwards;
+        }
+
+        @keyframes confetti-fall {
+            to {
+                transform: translateY(100vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🌍 Module 1: Creation Week! ✨</h1>
+        <p class="subtitle">Let's discover how God made EVERYTHING!</p>
+
+        <div class="progress-bar">
+            <div class="progress-fill" id="progressBar">0%</div>
+        </div>
+
+        <!-- Hook Section -->
+        <div class="section">
+            <h2 class="section-title">🎨 Have You Ever Made Something?</h2>
+            <p class="hook-text">
+                Think about something YOU made that you were really proud of! Maybe you drew a picture, built something with blocks, or made up a game?
+            </p>
+            <p class="hook-text">
+                Today we're going to learn about the BIGGEST maker of all — <strong>GOD</strong>! He made everything we see. Let's find out how!
+            </p>
+        </div>
+
+        <!-- Story Section -->
+        <div class="section">
+            <h2 class="section-title">📖 The 7 Days of Creation</h2>
+            <div class="instruction">
+                <p class="instruction-text">
+                    <span style="font-size: 1.5em;">👆</span>
+                    Click on each day to reveal what God created!
+                </p>
+            </div>
+
+            <div class="day-container" id="daysContainer">
+                <!-- Day 1 -->
+                <div class="day-card" data-day="1">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 1</div>
+                    <span class="day-emoji">✨</span>
+                    <div class="day-title">Light!</div>
+                    <div class="day-description">
+                        God said "Let there be light!" and BAM! Light appeared! God separated the light from the darkness and called them day and night.
+                    </div>
+                </div>
+
+                <!-- Day 2 -->
+                <div class="day-card" data-day="2">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 2</div>
+                    <span class="day-emoji">☁️</span>
+                    <div class="day-title">Sky!</div>
+                    <div class="day-description">
+                        God made the big blue sky above us! He separated the water above (clouds) from the water below (oceans).
+                    </div>
+                </div>
+
+                <!-- Day 3 -->
+                <div class="day-card" data-day="3">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 3</div>
+                    <span class="day-emoji">🌳</span>
+                    <div class="day-title">Land & Plants!</div>
+                    <div class="day-description">
+                        God gathered water into oceans and made dry land appear. Then He made plants, trees, and flowers grow everywhere!
+                    </div>
+                </div>
+
+                <!-- Day 4 -->
+                <div class="day-card" data-day="4">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 4</div>
+                    <span class="day-emoji">☀️</span>
+                    <div class="day-title">Sun, Moon & Stars!</div>
+                    <div class="day-description">
+                        God put the sun in the sky for daytime and the moon and stars for nighttime. They help us know when to wake up and sleep!
+                    </div>
+                </div>
+
+                <!-- Day 5 -->
+                <div class="day-card" data-day="5">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 5</div>
+                    <span class="day-emoji">🐟</span>
+                    <div class="day-title">Fish & Birds!</div>
+                    <div class="day-description">
+                        God filled the oceans with fish and sea creatures, and the sky with birds that could fly! So many amazing animals!
+                    </div>
+                </div>
+
+                <!-- Day 6 -->
+                <div class="day-card" data-day="6">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 6</div>
+                    <span class="day-emoji">🦁</span>
+                    <div class="day-title">Animals & People!</div>
+                    <div class="day-description">
+                        God made all the animals - elephants, lions, dogs, cats, everything! Then He made the first people, Adam and Eve. He made them creative like Him!
+                    </div>
+                </div>
+
+                <!-- Day 7 -->
+                <div class="day-card" data-day="7">
+                    <span class="checkmark">✓</span>
+                    <div class="day-number">Day 7</div>
+                    <span class="day-emoji">😌</span>
+                    <div class="day-title">Rest!</div>
+                    <div class="day-description">
+                        God looked at everything He made and said "This is VERY good!" Then He rested. Even God took time to rest and enjoy what He created!
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Real World Connection -->
+        <div class="section real-world">
+            <h2 class="section-title">💡 We're Creators Too!</h2>
+            <p class="hook-text">
+                God made you creative just like Him! Here are ways YOU can create things:
+            </p>
+            <div class="real-world-examples">
+                <div class="example-card">
+                    <span class="example-emoji">🎨</span>
+                    <div class="example-text">Draw pictures</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">🧱</span>
+                    <div class="example-text">Build with blocks</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">🎮</span>
+                    <div class="example-text">Make up games</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">🌱</span>
+                    <div class="example-text">Grow plants</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">🐕</span>
+                    <div class="example-text">Care for animals</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">📚</span>
+                    <div class="example-text">Write stories</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">🎵</span>
+                    <div class="example-text">Make music</div>
+                </div>
+                <div class="example-card">
+                    <span class="example-emoji">🍪</span>
+                    <div class="example-text">Help cook</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quiz Section -->
+        <div class="section">
+            <h2 class="section-title">🎯 Let's See What You Learned!</h2>
+            
+            <div class="quiz-question">
+                <div class="question-text">1. What did God create on Day 1?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-question="1" data-correct="true">✨ Light and darkness</div>
+                    <div class="quiz-option" data-question="1" data-correct="false">🌳 Trees and plants</div>
+                    <div class="quiz-option" data-question="1" data-correct="false">🐟 Fish and birds</div>
+                </div>
+                <div class="feedback" id="feedback1"></div>
+            </div>
+
+            <div class="quiz-question">
+                <div class="question-text">2. What did God make on Day 3?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-question="2" data-correct="false">☀️ Sun and moon</div>
+                    <div class="quiz-option" data-question="2" data-correct="true">🌳 Land, oceans, and plants</div>
+                    <div class="quiz-option" data-question="2" data-correct="false">🦁 Animals and people</div>
+                </div>
+                <div class="feedback" id="feedback2"></div>
+            </div>
+
+            <div class="quiz-question">
+                <div class="question-text">3. What did God do on Day 7?</div>
+                <div class="quiz-options">
+                    <div class="quiz-option" data-question="3" data-correct="false">🦁 Made more animals</div>
+                    <div class="quiz-option" data-question="3" data-correct="true">😌 Rested and enjoyed what He made</div>
+                    <div class="quiz-option" data-question="3" data-correct="false">🌊 Made the oceans bigger</div>
+                </div>
+                <div class="feedback" id="feedback3"></div>
+            </div>
+        </div>
+
+        <!-- Completion Badge -->
+        <div class="badge-container" id="badgeContainer">
+            <div class="badge">🌟</div>
+            <div class="badge-text">You Did It!</div>
+            <div class="badge-subtext">You're a Creation Expert! ⭐</div>
+            <button class="btn" onclick="window.print()">Print My Certificate 📜</button>
+        </div>
+    </div>
+
+    <script>
+        let unlockedDays = 0;
+        let correctAnswers = 0;
+        const totalDays = 7;
+        const totalQuestions = 3;
+
+        // Handle day card clicks
+        document.querySelectorAll('.day-card').forEach(card => {
+            card.addEventListener('click', function() {
+                if (!this.classList.contains('unlocked')) {
+                    this.classList.add('unlocked');
+                    unlockedDays++;
+                    updateProgress();
+                    
+                    // Play a little celebration sound effect (optional)
+                    playSound();
+                }
+            });
+        });
+
+        // Handle quiz answers
+        document.querySelectorAll('.quiz-option').forEach(option => {
+            option.addEventListener('click', function() {
+                const questionNum = this.getAttribute('data-question');
+                const isCorrect = this.getAttribute('data-correct') === 'true';
+                const feedback = document.getElementById('feedback' + questionNum);
+                const allOptions = document.querySelectorAll(`[data-question="${questionNum}"]`);
+                
+                // Disable all options for this question
+                allOptions.forEach(opt => {
+                    opt.style.pointerEvents = 'none';
+                });
+
+                if (isCorrect) {
+                    this.classList.add('correct');
+                    feedback.textContent = '🎉 Awesome! That\'s right!';
+                    feedback.classList.add('success', 'show');
+                    correctAnswers++;
+                    createConfetti();
+                } else {
+                    this.classList.add('incorrect');
+                    feedback.textContent = '💭 Not quite! Try reading that day again.';
+                    feedback.classList.add('error', 'show');
+                }
+
+                updateProgress();
+                checkCompletion();
+            });
+        });
+
+        function updateProgress() {
+            const totalProgress = unlockedDays + correctAnswers;
+            const maxProgress = totalDays + totalQuestions;
+            const percentage = Math.round((totalProgress / maxProgress) * 100);
+            
+            const progressBar = document.getElementById('progressBar');
+            progressBar.style.width = percentage + '%';
+            progressBar.textContent = percentage + '%';
+        }
+
+        function checkCompletion() {
+            if (unlockedDays === totalDays && correctAnswers === totalQuestions) {
+                setTimeout(() => {
+                    document.getElementById('badgeContainer').classList.add('show');
+                    createMegaConfetti();
+                }, 500);
+            }
+        }
+
+        function playSound() {
+            // Optional: Add sound effect
+            // You can add actual audio later
+            console.log('🎵 Play sound!');
+        }
+
+        function createConfetti() {
+            const colors = ['#f39c12', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
+            for (let i = 0; i < 20; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 50);
+            }
+        }
+
+        function createMegaConfetti() {
+            const colors = ['#f39c12', '#e74c3c', '#3498db', '#2ecc71', '#9b59b6'];
+            for (let i = 0; i < 100; i++) {
+                setTimeout(() => {
+                    const confetti = document.createElement('div');
+                    confetti.className = 'confetti';
+                    confetti.style.left = Math.random() * window.innerWidth + 'px';
+                    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+                    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+                    document.body.appendChild(confetti);
+                    
+                    setTimeout(() => confetti.remove(), 3000);
+                }, i * 30);
+            }
+        }
+
+        // Initialize
+        updateProgress();
+    </script>
+</body>
+</html>
